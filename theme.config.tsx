@@ -14,7 +14,7 @@ const config: DocsThemeConfig = {
   chat: {
     link: 'https://discord.gg/reSvc8Ztk3',
   },
-  docsRepositoryBase: 'https://github.com/shuding/nextra-docs-template',
+  docsRepositoryBase: 'https://github.com/rhino-site/rhino-linux-wiki',
   footer: {
     text: 'Rhino Linux Wiki',
   },
