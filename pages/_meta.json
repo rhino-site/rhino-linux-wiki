@@ -1,8 +1,7 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced 📁",
-  "contribution": "How to Contribute",
+  "user": "User Documentation 📚",
+  "dev": "Developer Documentation 📁",
   "about": {
     "title": "About",
     "type": "page"
