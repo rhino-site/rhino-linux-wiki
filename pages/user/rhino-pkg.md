@@ -14,7 +14,8 @@ Rhino PKG (command: `rhino-pkg`, symlink: `rpk`) is our custom meta-package mana
 > [!NOTE]
 > Rhino PKG will only interact with package managers installed on the system.
 
-⚠️ There are some known issues when installing "Classic" snaps through Rhino PKG, please use `sudo snap install` to install Classic Snaps for the moment.
+> [!WARNING]
+> There are some known issues when installing "Classic" snaps through Rhino PKG, please use `sudo snap install` to install Classic Snaps for the moment.
 
 ### Commands
 
