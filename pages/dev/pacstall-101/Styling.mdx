@@ -1,0 +1,99 @@
+## Styling
+
+### Pacscript Name
+
+You need to save your script file as `${pkgname}.pacscript`. To add a package to `pacstall-programs`, fork the repository, and create a directory `packages/${pkgname}`; then, add `${pkgname}.pacscript` inside it. You also must edit the file at the head of the repository called [packagelist](https://github.com/pacstall/pacstall-programs/blob/master/packagelist), and add your new `${pkgname}` to the list. Finally, create a pull request.
+
+Example of script placement:
+
+```tree
+.
+├── packagelist
+└── packages
+    └── foo-bin
+        └── foo-bin.pacscript
+```
+
+### Remember to wrap everything in brackets and quotes
+
+You can test your package by cd'ing into the directory containing `${pkgname}.pacscript` and running `pacstall -I ${pkgname}.pacscript`. If it works, good! If not, Pacstall should tell you what went wrong.
+
+---
+
+### Internal Functions
+
+A few internal functions *may* be used, but are advised against unless absolutely necessary:
+
+- The function [ask](https://github.com/pacstall/pacstall-programs/blob/35a956766dba8f325b24f801d80ac9733efcba70/packages/librewolf-app/librewolf-app.pacscript#L42-L44) will get user input for Y or N.
+
+- The function [fancy_message](https://github.com/pacstall/pacstall-programs/blob/a7b865490e052e19a34865c07fa3c80c409065fd/packages/android-studio/android-studio.pacscript#L39) will print text inline with pacstall's formatted output.
+
+- The functions `parse_source_entry` and `calc_git_pkgver`, in conjunction with each other, will calculate a commit hash from a source, and return it to `comp_git_pkgver`. Example:
+
+```bash
+parse_source_entry "${source[4]}"
+calc_git_pkgver && echo "${comp_git_pkgver}"
+```
+
+---
+
+### Handling Symlinks
+Pay attention to how symlinks are installed in `{prepare,build,check,package}`. If we had a pacscript that looked like this:
+```bash
+package() {
+  ln -s "${pkgdir}/usr/bin/neofetch" "/usr/bin/brokenlink"
+}
+```
+
+```bash
+$ file /usr/bin/brokenlink
+/usr/bin/brokenlink: broken symbolic link to /usr/src/pacstall/neofetch/usr/bin/neofetch
+```
+
+The reason this happens is because `${pkgdir}` is a staging area that will eventually be removed after the deb is created. You can think of `${pkgdir}` as a temporary `/` for package files.
+
+How we handle it is to pre-suppose the destinations of the symlinks, like so:
+```bash
+package() {
+  mkdir -p "${pkgdir}/usr/bin"
+  ln -sf "/usr/bin/neofetch" "${pkgdir}/usr/bin/fixedlink"
+}
+```
+In this example:
+ - Our file is currently at `${pkgdir}/usr/bin/neofetch`, but will end up at `/usr/bin/neofetch`, so we make the link to the end destination. We add `-f` for this declaration. 
+ - Additionally, because we want our symlink to be contained within the package, we create it inside of `${pkgdir}`.
+ - This means created symlinks cannot be run inside of `{prepare,build,check,package}`, only once installed.
+
+---
+
+### Handling User Files
+Rarely will you ever need or want to touch the users home directory, and we encourage you to not touch it, however if you *need* to (and only as a last ditch attempt), you can handle files (such as configs, but never application data) like so:
+```bash
+package() {
+  cp -r .config/* /etc/skel/.config/
+}
+
+post_install() {
+  # Note the absence of sudo
+  # Use ${homedir} instead of trying to get the users home directory
+  # by trying `/home/$USER` or things in that nature
+  cp -r "/etc/skel/.config/foobar" "${homedir}/.config"
+}
+```
+If a package will create a configuration file in the home directory on first run, do not manually create one in the pacscript. If you _must_ modify the user's home directory in `post_install`, `post_upgrade`, or `post_remove`, use the `$homedir` variable provided by pacstall as a substitute for `$HOME` or `~`.
+
+---
+
+### Other
+
+You must not use features that are not in the master branch (latest release of Pacstall).
+
+Pacscripts should ideally be feature complete with their respective PKGBUILDs if available.
+
+Look at other [Pacscripts](https://github.com/pacstall/pacstall-programs/tree/master/packages) for reference.
+
+For tips on best practices with build tools like `meson` or `cargo`, see [here](https://github.com/pacstall/pacstall/wiki/Different-Package-Build-Systems).
+
+Lastly, do not ask the user for any input unless **absolutely** necessary, because we will not accept scripts otherwise. Use external variables to detect what you need to know before asking the user.
+
+As for styling, please use 2 spaces as a tab. You should format all scripts with `shfmt -bn -ci -sr -s -i 2 -w $pkgname.pacscript`.
