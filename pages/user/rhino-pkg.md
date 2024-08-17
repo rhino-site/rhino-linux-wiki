@@ -12,11 +12,7 @@ Rhino Pkg (command: `rhino-pkg`) is our custom meta-package manager. It was desi
 - Flatpak (**Flatpak must be installed first.**)
 - Snapcraft (**Snapd must be installed first.**)
 
-⚠️ Rhino Pkg currently does not support Nix Packages. **This is being worked on.**
-
 ⚠️ There are some known issues when installing "Classic" snaps through Rhino Pkg, please use `sudo snap install` to install Classic Snaps for the moment.
-
-⚠️ Rhino Linux **does not** support PPAs, please use Pacstall packages instead.
 
 ## Commands
 
