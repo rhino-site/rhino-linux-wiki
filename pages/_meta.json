@@ -1,7 +1,7 @@
 {
   "index": "Introduction",
-  "user": "User Documentation 📚",
-  "dev": "Developer Documentation 📁",
+  "user": "User Docs 📚",
+  "dev": "Developer Docs 📁",
   "home": {
     "title": "Home",
     "type": "page",

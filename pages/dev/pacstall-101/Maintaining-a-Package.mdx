@@ -1,0 +1,32 @@
+## Maintaining a Package
+
+### Updating your package
+Use an automated tool like [Pacup](https://github.com/pacstall/pacup).
+
+OR
+
+Make sure you are on the latest commit (fetch upstream) and change the `pkgver`, `source`, and `*sums` (if used).
+
+If not using Pacup, be sure to generate updated .SRCINFO data (or let pre-commit do it for you):
+```bash
+./scripts/srcinfo.sh add ${pkgname}
+```
+
+Then make a PR and use the title:
+```
+upd(pkgname): `oldver` -> `newver`
+```
+
+#### Other
+
+You **must** use Git (not GitHub) to manage your branch. This is due to the pre-commit hooks required when creating Pacscripts.
+
+If you join our discord, you can get the shiny <kbd>Pacscript Maintainer</kbd> role 🤩.
+
+### Testing packages
+Our CI is pretty good at replicating a real environment, but it has some issues, such as:
+
+- systemd in numerous regards, but especially with networking
+- Unprivileged user running (essentially root user privileges without being root)
+
+For situations that may require a proper user or systemd, or other circumstances where the CI is not working correctly, we have the function `pacstall -Qa`. It allows you to easily install package(s) from any open PR. If you know a certain package you are updating will have any issues in the CI, use `pacstall -Qa` and upload the terminal output in your PR description.

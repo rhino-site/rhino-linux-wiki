@@ -1,0 +1,47 @@
+## Functions
+
+### Packaging Scripts
+
+#### `prepare`
+
+This function is run to prepare a package for building. The starting location will always be `${srcdir}`.
+
+#### `build`
+
+This function is run to compile/build a package. Use multicore building whenever possible. You get get the amount of cores with the variable `${NCPU}`. The starting location will always be `${srcdir}`.
+
+#### `check`
+
+This function is run to run sanity checks on packages, typically coming from the projects testing suite. The starting location will always be `${srcdir}`.
+
+#### `package`
+
+This function is used to install the package to its staging area. The most important part of this function is to install to `${pkgdir}`. Check your build system for how to install to a certain root directory. The starting location will always be `${srcdir}`.
+
+---
+
+### Maintainer Scripts
+
+#### `pre_remove`
+
+This function is run before the a package is removed. It is the [Debian `prerm` script](https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html).
+
+#### `pre_install`
+
+This function is run before the deb unpacks onto the system. It is the Debian `preinst` script.
+
+#### `pre_upgrade`
+
+This function works just like `pre_install`, but runs instead if the package is already on the system. If `pre_install` is provided but not `pre_upgrade`, then `pre_install` runs as `pre_upgrade`. If only `pre_upgrade` is provided, then it will not run on initial install, but will on every upgrade after.
+
+#### `post_remove`
+
+This function is run after the package is removed. It is the Debian `postrm` script.
+
+#### `post_install`
+
+This function is run after the package is installed. It is the Debian `postinst` script.
+
+#### `post_upgrade`
+
+This function is run after a package upgrade. The same rules from `pre_upgrade` and `pre_install` apply for `post_upgrade` and `post_install`.
