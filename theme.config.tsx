@@ -18,6 +18,8 @@ const config: DocsThemeConfig = {
   footer: {
     text: 'Rhino Linux Wiki',
   },
+  primarySaturation: 33,
+  primaryHue: 245,
 }
 
 export default config
