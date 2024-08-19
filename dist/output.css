@@ -628,6 +628,10 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
 }
 
+.nx-fixed.nx-z-10 {
+  position: sticky !important;
+}
+
 .nextra-nav-container-blur {
   position: sticky !important;
 }
