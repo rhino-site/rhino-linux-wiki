@@ -606,6 +606,15 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, .nx-text-ellipsis, .nx-font-medium
   font-family: "Ubuntu", sans-serif;
 }
 
+:is(html[class~=dark] .dark\:nx-border-neutral-800) {
+  border-color: rgb(85 75 105 / 0.3) !important;
+}
+
+.nx-flex:before {
+  border-color: rgb(85 75 105 / 0.3) !important;
+  background-color: rgb(85 75 105 / 0.3) !important;
+}
+
 :is(html[class~=dark] div), :is(html[class~=dark] ul), :is(html[class~=dark] aside), :is(html[class~=dark] footer) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(25 20 45 / var(--tw-bg-opacity)) !important;

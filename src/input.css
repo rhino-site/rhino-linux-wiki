@@ -44,6 +44,15 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, .nx-text-ellipsis, .nx-font-medium
   font-family: "Ubuntu", sans-serif;
 }
 
+:is(html[class~=dark] .dark\:nx-border-neutral-800) {
+  @apply !nx-border-site-100/30;
+}
+
+.nx-flex:before {
+  @apply !nx-border-site-100/30;
+  @apply !nx-bg-site-100/30;
+}
+
 :is(html[class~=dark] div), :is(html[class~=dark] ul), :is(html[class~=dark] aside), :is(html[class~=dark] footer) {
   @apply !nx-bg-site-400;
 }
