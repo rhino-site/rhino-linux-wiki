@@ -41,8 +41,8 @@ This is what Pacstall records as the name of the built package. Use the followin
 
 If this is not provided in a pacscript, then it is assumed that it is a singular `pkgname`, and a `.SRCINFO` file assumes that `pkgbase` is equal to that singular `pkgname`. If using [package splitting](https://wiki.archlinux.org/title/PKGBUILD#pkgbase), `pkgname` is treated like an array, and multiple packages can be built. To split out the packages, they should define the functions `package_pkgname()`, and can override the following variables inside of them:  `gives`, `pkgdesc`, `arch`, `url`, `license`, `depends`, `checkdepends`, `optdepends`, `pacdeps`, `provides`, `checkconflicts`, `conflicts`, `breaks`, `replaces`, `enhances`, `recommends`, `priority`, `backup`, `repology`.
 
-<Callout type="error" emoji="❗">
-  **Caution:** In most cases, this should **not** be provided in a pacscript. Only use this for split packages (pacscripts that build multiple packages from the same source).
+<Callout type="error" emoji="☢">
+  **Danger:** In most cases, this should **not** be provided in a pacscript. Only use this for split packages (pacscripts that build multiple packages from the same source).
 </Callout>
 
 #### `repology`
@@ -86,8 +86,8 @@ This is used when you wish to trigger an update on users computers but [pkgver](
 
 This variable is used to forcibly upgrade a package in any circumstance. In most cases, a `pkgrel` bump will work just fine, but certain circumstances may require an upgrade that breaks [normal comparison logic](https://wiki.archlinux.org/title/PKGBUILD#epoch). It is assumed to be 0 [by default](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version), and if used, should be a small integer.
 
-<Callout type="error" emoji="❗">
-  **Caution:** Use this _sparingly_, as any package using `epoch` cannot remove the `epoch` on the next `pkgver` update.
+<Callout type="error" emoji="☢">
+  **Danger:** Use this _sparingly_, as any package using `epoch` cannot remove the `epoch` on the next `pkgver` update.
 </Callout>
 
 #### `url`
@@ -384,14 +384,14 @@ Sets the [priority](https://www.debian.org/doc/debian-policy/ch-archive.html#s-p
 4. `standard`
 5. `optional` (default)
 
-<Callout type="error" emoji="❗">
-  **Caution:** Do not include `priority` unless you know what you're attempting to do.
+<Callout type="error" emoji="☢">
+  **Danger:** Do not include `priority` unless you know what you're attempting to do.
 </Callout>
 
 #### `mask`
 
 An array containing `apt` or `pacstall` package names. Once this package is installed, anything inside `mask` will be prevented from showing up in `apt` and `pacstall` search results, or anything relating to `dpkg`. Once the package is removed, the effect reverses and `mask` contents will be visible again.
 
-<Callout type="error" emoji="❗">
-  **Caution:** Do not use `mask` unless you know what you're doing.
+<Callout type="error" emoji="☢">
+  **Danger:** Do not use `mask` unless you know what you're doing.
 </Callout>

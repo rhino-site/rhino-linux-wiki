@@ -602,8 +602,8 @@ video {
   src: url("UbuntuMono-Bold.ttf");
 }
 
-p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-ellipsis, .nx-font-medium, .nx-text-xs {
-  font-family: "Ubuntu", sans-serif;
+p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-ellipsis, .nx-font-medium, .nx-text-xs, .nx-select-none, .nextra-callout {
+  font-family: "Ubuntu", sans-serif !important;
 }
 
 :is(html[class~=dark] .dark\:nx-border-neutral-800) {
