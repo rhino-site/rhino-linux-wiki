@@ -110,6 +110,10 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   @apply !nx-text-rhino-purple;
 }
 
+.nx-mr-2.nx-rounded-t {
+  @apply !nx-ml-2;
+}
+
 code, kbd, samp, pre {
   font-family: "UbuntuMono", monospace !important;
   font-size: 102% !important;

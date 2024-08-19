@@ -690,6 +690,10 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   color: rgb(141 123 228 / var(--tw-text-opacity)) !important;
 }
 
+.nx-mr-2.nx-rounded-t {
+  margin-left: 0.5rem !important;
+}
+
 code, kbd, samp, pre {
   font-family: "UbuntuMono", monospace !important;
   font-size: 102% !important;
