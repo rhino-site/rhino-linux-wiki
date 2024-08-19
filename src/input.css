@@ -40,13 +40,87 @@
   src: url("UbuntuMono-Bold.ttf");
 }
 
-p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, .nx-text-ellipsis, .nx-font-medium, .nx-text-xs {
-  font-family: "Ubuntu", sans-serif;
+p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-ellipsis, .nx-font-medium, .nx-text-xs, .nx-select-none, .nextra-callout {
+  font-family: "Ubuntu", sans-serif !important;
+}
+
+:is(html[class~=dark] .dark\:nx-border-neutral-800) {
+  @apply !nx-border-site-100/30;
+}
+
+.nx-flex:before {
+  @apply !nx-border-site-100/30;
+  @apply !nx-bg-site-100/30;
+}
+
+:is(html[class~=dark] div), :is(html[class~=dark] ul), :is(html[class~=dark] aside), :is(html[class~=dark] footer) {
+  @apply !nx-bg-site-400;
+}
+
+:is(html[class~=dark] .nx-sticky) {
+  @apply !nx-bg-site-400;
+  @apply !nx-shadow-none;
+}
+
+.nextra-nav-container-blur, .nx-fixed.nx-z-10 {
+  @apply !nx-sticky;
+}
+
+.nextra-callout.nx-border-orange-100 {
+  @apply !nx-text-orange-800;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-orange-100) {
+  @apply !nx-text-orange-300;
+  @apply !nx-border-orange-400;
+}
+
+.nextra-callout.nx-border-red-200 {
+  @apply !nx-text-red-800;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-red-200) {
+  @apply !nx-text-red-400;
+  @apply !nx-border-red-500;
+}
+
+.nextra-callout.nx-border-blue-200 {
+  @apply !nx-text-blue-800;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-blue-200) {
+  @apply !nx-text-blue-400;
+  @apply !nx-border-blue-500;
+}
+
+.nextra-callout.nx-border-yellow-100 {
+  @apply !nx-text-yellow-800;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-yellow-100) {
+  @apply !nx-text-yellow-300;
+  @apply !nx-border-yellow-400;
+}
+
+.nx-text-primary-600, .nx-text-primary-800 {
+  @apply !nx-text-highlighter-purple;
+}
+
+:is(html[class~=dark] .nx-text-primary-600), :is(html[class~=dark] .nx-text-primary-800) {
+  @apply !nx-text-rhino-purple;
+}
+
+.nx-mr-2.nx-rounded-t {
+  @apply !nx-ml-2;
+}
+
+code, kbd, samp, pre {
+  font-family: "UbuntuMono", monospace !important;
+  font-size: 102% !important;
 }
 
 .line {
-  font-family: "UbuntuMono", monospace;
-  font-size: 120%;
+  font-size: 95% !important;
 }
 
 .ecosystem-text {
