@@ -690,9 +690,13 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   color: rgb(141 123 228 / var(--tw-text-opacity)) !important;
 }
 
+code, kbd, samp, pre {
+  font-family: "UbuntuMono", monospace !important;
+  font-size: 102% !important;
+}
+
 .line {
-  font-family: "UbuntuMono", monospace;
-  font-size: 120%;
+  font-size: 95% !important;
 }
 
 .ecosystem-text {
