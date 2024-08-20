@@ -151,7 +151,7 @@ There are a few restrictions on field names:
 
 #### `source`
 
-This is an array with URLs as elements. These will be downloaded by pacstall before the [prepare](#prepare) function. `source` can be created many different ways, and is incredibly powerful in functionality.
+This is an array with URLs as elements. These will be downloaded by pacstall before the [prepare](Functions#prepare) function. `source` can be created many different ways, and is incredibly powerful in functionality.
 
 Inside a `source` array, you have the following schema:
 
@@ -245,7 +245,7 @@ In dpkg, files in `/etc` are set as "configuration files", meaning that by defau
 
 #### `external_connection`
 
-Because Pacstall runs builds in an isolated environment, internet connection is by default not permitted inside of the [packaging functions](https://github.com/pacstall/pacstall/wiki/101.2-Functions#packaging-scripts). If a package needs to connect to the internet for these functions (often for `cargo` builds, certain `python` builds, and occasionally making a git connection), the variable `external_connection=true` must be provided. By default, this is not included, and is assumed `false`.
+Because Pacstall runs builds in an isolated environment, internet connection is by default not permitted inside of the [packaging functions](Functions#packaging-scripts). If a package needs to connect to the internet for these functions (often for `cargo` builds, certain `python` builds, and occasionally making a git connection), the variable `external_connection=true` must be provided. By default, this is not included, and is assumed `false`.
 
 ---
 
