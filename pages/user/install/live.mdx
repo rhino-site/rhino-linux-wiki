@@ -1,3 +1,5 @@
+import { Callout } from 'nextra/components'
+
 ## ISO/Live Image
 
 ### GRUB Bootloader
@@ -9,8 +11,12 @@ When you boot from your Live USB you will be greeted with the GRUB Bootloader, w
 
 When you first boot into your live system, the installer will not automatically start, rather you are immediately given the chance to try Rhino Linux on your live USB. When you are ready to install Rhino Linux you can ***click on the icon on your desktop***, this will then launch our customised Calamares Installer.
 
-- ***It is important to note that the icon for the installer does not currently display in Rhino Linux 2024.2, instead you are able to launch the installer through the applications grid, which can be launched either in the dock or by pressing `CTRL` + `A`***.
-    - You are able to track this issue [here](https://github.com/rhino-linux/os/issues/85).
+
+<Callout emoji="ⓘ">
+  **Important:** The "Install Rhino Linux" icon does not currently show up on the desktop due to a bug in recent XFCE updates ([issue report](https://github.com/rhino-linux/os/issues/85)).
+
+Users can start the installer and select this icon from the application grid, which can be launched from the dock, or with the shortcut `Super + A`.
+</Callout>
 
 ### Installer
 
