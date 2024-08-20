@@ -554,34 +554,6 @@ video {
   --tw-contain-style:  ;
 }
 
-.visible {
-  visibility: visible;
-}
-
-.static {
-  position: static;
-}
-
-.relative {
-  position: relative;
-}
-
-.inline {
-  display: inline;
-}
-
-.grid {
-  display: grid;
-}
-
-.contents {
-  display: contents;
-}
-
-.lowercase {
-  text-transform: lowercase;
-}
-
 @font-face {
   font-family: "Ubuntu";
 
@@ -630,13 +602,103 @@ video {
   src: url("UbuntuMono-Bold.ttf");
 }
 
-p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, .nx-text-ellipsis, .nx-font-medium, .nx-text-xs {
-  font-family: "Ubuntu", sans-serif;
+p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-ellipsis, .nx-font-medium, .nx-text-xs, .nx-select-none, .nextra-callout {
+  font-family: "Ubuntu", sans-serif !important;
+}
+
+:is(html[class~=dark] .dark\:nx-border-neutral-800) {
+  border-color: rgb(85 75 105 / 0.3) !important;
+}
+
+.nx-flex:before {
+  border-color: rgb(85 75 105 / 0.3) !important;
+  background-color: rgb(85 75 105 / 0.3) !important;
+}
+
+:is(html[class~=dark] footer), :is(html[class~=dark] ul), :is(html[class~=dark] .nx-sticky), :is(html[class~=dark] .nextra-callout), :is(html[class~=dark] [id=__next]), :is(html[class~=dark] .nextra-sidebar-container) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(25 20 45 / var(--tw-bg-opacity)) !important;
+}
+
+.nx-sticky {
+  --tw-shadow: 0 0 #0000 !important;
+  --tw-shadow-colored: 0 0 #0000 !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+:is(html[class~=dark] .nextra-nav-container-blur), :is(html[class~=dark] .nx-fixed.nx-z-10) {
+  position: sticky !important;
+}
+
+.nextra-callout.nx-border-orange-100 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(154 52 18 / var(--tw-text-opacity)) !important;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-orange-100) {
+  --tw-text-opacity: 1 !important;
+  color: rgb(253 186 116 / var(--tw-text-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(251 146 60 / var(--tw-border-opacity)) !important;
+}
+
+.nextra-callout.nx-border-red-200 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(153 27 27 / var(--tw-text-opacity)) !important;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-red-200) {
+  --tw-text-opacity: 1 !important;
+  color: rgb(248 113 113 / var(--tw-text-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity)) !important;
+}
+
+.nextra-callout.nx-border-blue-200 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(30 64 175 / var(--tw-text-opacity)) !important;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-blue-200) {
+  --tw-text-opacity: 1 !important;
+  color: rgb(96 165 250 / var(--tw-text-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity)) !important;
+}
+
+.nextra-callout.nx-border-yellow-100 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(133 77 14 / var(--tw-text-opacity)) !important;
+}
+
+:is(html[class~=dark] .nextra-callout.nx-border-yellow-100) {
+  --tw-text-opacity: 1 !important;
+  color: rgb(253 224 71 / var(--tw-text-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(250 204 21 / var(--tw-border-opacity)) !important;
+}
+
+.nx-text-primary-600, .nx-text-primary-800 {
+  --tw-text-opacity: 1 !important;
+  color: rgb(146 53 255 / var(--tw-text-opacity)) !important;
+}
+
+:is(html[class~=dark] .nx-text-primary-600), :is(html[class~=dark] .nx-text-primary-800) {
+  --tw-text-opacity: 1 !important;
+  color: rgb(141 123 228 / var(--tw-text-opacity)) !important;
+}
+
+.nx-mr-2.nx-rounded-t {
+  margin-left: 0.5rem !important;
+}
+
+code, kbd, samp, pre {
+  font-family: "UbuntuMono", monospace !important;
+  font-size: 102% !important;
 }
 
 .line {
-  font-family: "UbuntuMono", monospace;
-  font-size: 120%;
+  font-size: 95% !important;
 }
 
 .ecosystem-text {

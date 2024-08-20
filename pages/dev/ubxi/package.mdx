@@ -1,0 +1,23 @@
+# Packaging UBXI
+
+### Reference
+
+Before proceeding, please make sure you have followed our [creation/development guide](create).
+
+While the details of the implementation of a UBXI DE are directly tied to its base DE, the pacscript for [unicorn-desktop-git](https://github.com/pacstall/pacstall-programs/blob/master/packages/unicorn-desktop-git/unicorn-desktop-git.pacscript) should be used as a reference for UBXI packages. The full pacscript packaging guide can be found [here](../pacstall-101).
+
+### Dotfiles
+
+All of the dotfiles needed for the configuration of a UBXI DE must be placed in a git source repository, preferably on GitHub or GitLab, similar to how the [Unicorn repository](https://github.com/rhino-linux/unicorn) is structured.
+
+### Packaging Standards
+
+All UBXI packages must follow the UBXI naming convention:  
+`ubxi-{environment}-{platform}-git`, where:
+
+- `environment` is the DE/WM base, such as: `gnome`, `phosh`, `kde`, `awesomewm`, etc.
+- `platform` is either `desktop` or `mobile`.
+
+Additionally, all UBXI packages **must** include `rhino-ubxi-core` as a `pacdep`.
+
+All UBXI packages are to be submitted to [the pacstall-programs repository](https://github.com/pacstall/pacstall-programs) for testing and review by both the Pacstall and Rhino Linux teams before approval.

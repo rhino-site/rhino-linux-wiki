@@ -1,0 +1,21 @@
+import { Callout } from 'nextra/components'
+
+# Replacing Unicorn (XFCE)
+
+<Callout type="warning" emoji="⚠">
+  **Warning:** We are still looking for UBXI maintainers, and at this time no UBXI ports exist. This being said, the proper way to switch to any generic desktop environment available in normal repositories (GNOME, KDE, etc) is:
+  ```bash
+  # switch to UBXI
+  rpk install rhino-ubxi-core
+  # install some environment
+  rpk install kubuntu-desktop
+  # remove Unicorn
+  rpk remove unicorn-desktop-git
+  ```
+</Callout>
+
+Maybe you're not a fan of XFCE, and would like to keep the same Unicorn elegance, but with a different desktop as a base. UBXI makes that possible.
+
+To search for a UBXI port you can simply run: `rpk install ubxi`, from there you can see which desktop environment ports are available and select to install one.
+
+UBXI is entirely community maintained, and then is verified by Rhino Linux developers. If a port does not exist that you want, you are free to look at our [UBXI creation/development page](../dev/ubxi/create).

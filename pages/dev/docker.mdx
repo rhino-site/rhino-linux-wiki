@@ -1,0 +1,111 @@
+import { Tabs } from 'nextra/components'
+
+# Docker Images
+
+For rapid containerized development of Rhino Linux, we provide Docker images served through the `ghcr.io` registry. These images ship with `rhino-server-core` as their base version, and are built for both `amd64/x86_64` and `arm64/aarch64` architectures. They can be reached from the following tags:
+
+- `ghcr.io/rhino-linux/docker:latest` - The most recently built image.
+- `ghcr.io/rhino-linux/docker:${YYYYMMDD}` - Daily built images on our [GitHub](https://github.com/rhino-linux/docker/pkgs/container/docker), between `00:00-01:00 UTC`. `YYYYMMDD` can be any date `20240106` or later.
+- `ghcr.io/rhino-linux/docker:${YYYY.MV}` - Images built and tagged when we release specific milestone versions. `YYYY.MV` can be any version `2023.4` or later.
+
+For quick setup information, select your platform below:
+
+<Tabs items={['Linux', 'macOS', 'Windows']} defaultIndex="0">
+  <Tabs.Tab>
+    If you have not already done so, install [Docker Engine](https://docs.docker.com/engine/install/)* or [Docker Desktop](https://docs.docker.com/desktop/install/linux-install/).
+    
+    If using only Docker Engine, it is highly recommended to also install the [Docker buildx](https://github.com/docker/buildx)* plugin.
+
+    *For Rhino Linux and Pacstall users, Docker Engine and buildx binaries are provided (for both `amd64` and `arm64` architectures):  
+    ```bash
+    pacstall -I docker-bin docker-buildx-plugin-bin
+    ```
+    ---
+    Run the following command in a terminal to pull the image:
+    ```bash
+    docker pull ghcr.io/rhino-linux/docker:latest
+    ```
+    Or swap `latest` for another specified version.
+
+    Then, you can run the following command to start it:
+    ```bash
+    docker run -it --net=host --privileged ghcr.io/rhino-linux/docker:latest bash
+    ```
+
+    ---
+
+    You can also use [Rhino Docker Builder](https://github.com/rhino-linux/docker/blob/master/README.md) to manage our images.
+
+    To use `rhino-docker-builder`, first clone and enter the repo:
+
+    ```bash
+    git clone https://github.com/rhino-linux/docker && cd docker
+    ```
+
+    Rhino Linux and Pacstall users can also instead install from the command:
+
+    ```bash
+    pacstall -I rhino-docker-builder-git
+    ```
+
+    Now, to pull and start* an image, we can run:
+
+    ```bash
+    ./rhino-docker-builder -p -t -v latest
+
+    # or if installed through Pacstall
+    rdb -p -t -v latest
+    ```
+    Or swap `latest` for another specified version.
+
+    *To pull without starting, drop the `-t` flag.
+  </Tabs.Tab>
+  <Tabs.Tab>
+    If you have not already done so, install [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/).
+
+    ---
+    Run the following command in a terminal to pull the image:
+    ```bash
+    docker pull ghcr.io/rhino-linux/docker:latest
+    ```
+    Or swap `latest` for another specified version.
+
+    Then, you can run the following command to start it:
+    ```bash
+    docker run -it --net=host --privileged ghcr.io/rhino-linux/docker:latest bash
+    ```
+
+    ---
+
+    You can also use [Rhino Docker Builder](https://github.com/rhino-linux/docker/blob/master/README.md) to manage our images.
+
+    To use `rhino-docker-builder`, first clone and enter the repo:
+
+    ```bash
+    git clone https://github.com/rhino-linux/docker && cd docker
+    ```
+
+    Now, to pull and start* an image, we can run:
+    ```bash
+    ./rhino-docker-builder -p -t -v latest
+    ```
+    Or swap `latest` for another specified version.
+
+    *To pull without starting, drop the `-t` flag.
+  </Tabs.Tab>
+  <Tabs.Tab>
+    If you have not already done so, install [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/).
+
+    ---
+    Run the following command in a terminal to pull the image:
+    ```bash
+    docker pull ghcr.io/rhino-linux/docker:latest
+    ```
+    Or swap `latest` for another specified version.
+
+    Then, you can run the following command to start it:
+    ```bash
+    docker run -it --net=host --privileged ghcr.io/rhino-linux/docker:latest bash
+    ```
+  </Tabs.Tab>
+</Tabs>
