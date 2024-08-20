@@ -53,12 +53,11 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   @apply !nx-bg-site-100/30;
 }
 
-:is(html[class~=dark] div), :is(html[class~=dark] ul), :is(html[class~=dark] aside), :is(html[class~=dark] footer) {
+:is(html[class~=dark] footer), :is(html[class~=dark] ul), :is(html[class~=dark] .nx-sticky), :is(html[class~=dark] .nextra-callout), :is(html[class~=dark] [id=__next]) {
   @apply !nx-bg-site-400;
 }
 
-:is(html[class~=dark] .nx-sticky) {
-  @apply !nx-bg-site-400;
+.nx-sticky {
   @apply !nx-shadow-none;
 }
 

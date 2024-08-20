@@ -615,14 +615,12 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   background-color: rgb(85 75 105 / 0.3) !important;
 }
 
-:is(html[class~=dark] div), :is(html[class~=dark] ul), :is(html[class~=dark] aside), :is(html[class~=dark] footer) {
+:is(html[class~=dark] footer), :is(html[class~=dark] ul), :is(html[class~=dark] .nx-sticky), :is(html[class~=dark] .nextra-callout), :is(html[class~=dark] [id=__next]) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(25 20 45 / var(--tw-bg-opacity)) !important;
 }
 
-:is(html[class~=dark] .nx-sticky) {
-  --tw-bg-opacity: 1 !important;
-  background-color: rgb(25 20 45 / var(--tw-bg-opacity)) !important;
+.nx-sticky {
   --tw-shadow: 0 0 #0000 !important;
   --tw-shadow-colored: 0 0 #0000 !important;
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
