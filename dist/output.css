@@ -615,7 +615,7 @@ p, h1, h2, h3, h4, hr, td, tr, ul, ol, li, a, footer, article, main, .nx-text-el
   background-color: rgb(85 75 105 / 0.3) !important;
 }
 
-:is(html[class~=dark] footer), :is(html[class~=dark] ul), :is(html[class~=dark] .nx-sticky), :is(html[class~=dark] .nextra-callout), :is(html[class~=dark] [id=__next]) {
+:is(html[class~=dark] footer), :is(html[class~=dark] ul), :is(html[class~=dark] .nx-sticky), :is(html[class~=dark] .nextra-callout), :is(html[class~=dark] [id=__next]), :is(html[class~=dark] .nextra-sidebar-container) {
   --tw-bg-opacity: 1 !important;
   background-color: rgb(25 20 45 / var(--tw-bg-opacity)) !important;
 }
