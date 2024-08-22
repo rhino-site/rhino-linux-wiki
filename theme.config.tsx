@@ -11,7 +11,7 @@ const config: DocsThemeConfig = {
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta property="og:title" content="Rhino Linux" />
-      <meta property="og:description" content="Ubuntu Based, Rolling Release." />
+      <meta property="og:description" content="Ubuntu Based, Rolling Release" />
       <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
       <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico" />
     </>
