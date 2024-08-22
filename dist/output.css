@@ -554,16 +554,16 @@ video {
   --tw-contain-style:  ;
 }
 
-.nx-mt-4 {
-  margin-top: 1rem;
-}
-
 .nx-mb-4 {
   margin-bottom: 1rem;
 }
 
 .nx-mt-2 {
   margin-top: 0.5rem;
+}
+
+.nx-mt-4 {
+  margin-top: 1rem;
 }
 
 .nx-grid {
@@ -582,20 +582,20 @@ video {
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.nx-gap-4 {
-  gap: 1rem;
-}
-
 .nx-gap-2 {
   gap: 0.5rem;
 }
 
-.nx-rounded-\[0\.65em\] {
-  border-radius: 0.65em;
+.nx-gap-4 {
+  gap: 1rem;
 }
 
 .nx-rounded-\[0\.25em\] {
   border-radius: 0.25em;
+}
+
+.nx-rounded-\[0\.65em\] {
+  border-radius: 0.65em;
 }
 
 .nx-border-4 {
@@ -681,12 +681,6 @@ video {
 .nx-text-off-white {
   --tw-text-opacity: 1;
   color: rgb(254 254 254 / var(--tw-text-opacity));
-}
-
-.nx-shadow-2xl {
-  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 @font-face {
