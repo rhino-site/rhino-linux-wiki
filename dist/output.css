@@ -554,6 +554,119 @@ video {
   --tw-contain-style:  ;
 }
 
+.nx-mt-4 {
+  margin-top: 1rem;
+}
+
+.nx-grid {
+  display: grid;
+}
+
+.nx-grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.nx-grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.nx-grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.nx-gap-4 {
+  gap: 1rem;
+}
+
+.nx-rounded-\[0\.65em\] {
+  border-radius: 0.65em;
+}
+
+.nx-border-4 {
+  border-width: 4px;
+}
+
+.nx-border-brand-dark {
+  border-color: #2d2d2d44;
+}
+
+.nx-border-brand-light {
+  border-color: #fefefe11;
+}
+
+.nx-bg-dark-purple {
+  --tw-bg-opacity: 1;
+  background-color: rgb(19 9 60 / var(--tw-bg-opacity));
+}
+
+.nx-bg-highlighter-purple {
+  --tw-bg-opacity: 1;
+  background-color: rgb(146 53 255 / var(--tw-bg-opacity));
+}
+
+.nx-bg-neon-purple {
+  --tw-bg-opacity: 1;
+  background-color: rgb(139 0 231 / var(--tw-bg-opacity));
+}
+
+.nx-bg-rhino-purple {
+  --tw-bg-opacity: 1;
+  background-color: rgb(141 123 228 / var(--tw-bg-opacity));
+}
+
+.nx-bg-site-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(85 75 105 / var(--tw-bg-opacity));
+}
+
+.nx-bg-site-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(55 50 80 / var(--tw-bg-opacity));
+}
+
+.nx-bg-site-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 30 55 / var(--tw-bg-opacity));
+}
+
+.nx-bg-site-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(25 20 45 / var(--tw-bg-opacity));
+}
+
+.nx-bg-unicorn-dark {
+  --tw-bg-opacity: 1;
+  background-color: rgb(38 24 76 / var(--tw-bg-opacity));
+}
+
+.nx-bg-unicorn-magenta {
+  --tw-bg-opacity: 1;
+  background-color: rgb(193 0 128 / var(--tw-bg-opacity));
+}
+
+.nx-bg-unicorn-pink {
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 4 255 / var(--tw-bg-opacity));
+}
+
+.nx-bg-unicorn-purple {
+  --tw-bg-opacity: 1;
+  background-color: rgb(139 0 231 / var(--tw-bg-opacity));
+}
+
+.nx-p-2 {
+  padding: 0.5rem;
+}
+
+.nx-text-center {
+  text-align: center;
+}
+
+.nx-text-off-white {
+  --tw-text-opacity: 1;
+  color: rgb(254 254 254 / var(--tw-text-opacity));
+}
+
 @font-face {
   font-family: "Ubuntu";
 
