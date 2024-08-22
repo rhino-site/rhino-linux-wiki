@@ -2,6 +2,7 @@
   "install": "Installation Guide",
   "rpk": "Rhino PKG",
   "pacstall": "Pacstall",
-  "nvidia": "Nvidia Drivers",
-  "switch": "Switch to UBXI"
+  "unicorn": "Unicorn Desktop",
+  "switch": "Switch to UBXI",
+  "nvidia": "Nvidia Drivers"
 }
