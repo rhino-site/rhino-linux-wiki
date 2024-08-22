@@ -1,0 +1,56 @@
+import { Callout } from 'nextra/components'
+
+## Management Files
+
+This manual page describes the format of the `pacstallrepo` and `update` files. These are simple text files which contain newline-separated information.
+
+`/usr/share/pacstall/repo/pacstallrepo` - repository management file
+
+`/usr/share/pacstall/repo/update` - update management file
+
+---
+
+### `pacstallrepo`
+
+<Callout type="info" emoji="✎">
+  **Note:** This file is associated with the [`--add-repo`](commands#-a---add-repo) and [`--remove-repo`](commands#-rr---remove-repo) commands.
+</Callout>
+
+There is one optional component and one required component:
+
+```
+url @alias
+```
+
+Where `alias` is optional.
+
+#### `url`
+
+This is the raw URL to a git repository. This should *not* end in `.git`. This *should* normally end in `user/reponame`.
+
+#### `alias`
+
+This takes the form of `@alias` where `alias` can be anything alphanumeric. This would be useful if you wanted to do something like `pacstall -I pkg@pacstall` vs `pacstall -I pkg@enhanced` where `pacstall` is the official repository and `enhanced` is your repository with additional modifications, instead of `pacstall -I pkg@github:pacstall/pacstall-programs` and `pacstall -I pkg@github:me/pacstall-enhanced-repo`, or other various long links.
+
+---
+
+### `update`
+
+<Callout type="info" emoji="✎">
+  **Note:** This file is associated with the [`--update`](commands#-u---update) command.
+</Callout>
+
+Usually, this file does not need to be manually updated. If `pacstall -U .` on a local repository is run, it will be set to `pacstall master`. This is the format the `update` file takes:
+
+```
+username branch
+```
+
+#### `username`
+
+Since Pacstall is hosted on GitHub, the `update` file does not support anything except GitHub, and `username` will take the username where a repository named `pacstall` is created inside.
+
+#### `branch`
+
+This is the branch name, usually `master`.
+This conversion keeps the structure intact while putting the relevant content into proper markdown code blocks.
