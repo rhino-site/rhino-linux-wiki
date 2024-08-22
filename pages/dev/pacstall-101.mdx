@@ -1,0 +1,97 @@
+## Pacstall 101: Creating a Pacscript
+
+This page is a reference page containing most variables/arrays/functions that a person should reasonably expect to have when creating a pacscript. Below is a list of every base variable/function/array. Each will be explained in the sections that follow.
+
+```bash
+pkgbase="bar" # Package base name (only should be used for split packages)
+pkgname=("foo" "barfoo") # Package name(s) (only an array if using pkgbase)
+repology=("project: bar") # Repology reference for pacup
+arch=('any' 'amd64' 'arm64') # Architectures that this program can build on
+pkgver="1.0.0" # Upstream package version
+pkgrel="3" # Counter for pacscript modifications past $pkgver
+epoch="4" # Force a package to be seen as newer than any previous version
+url='https://foo.com/bar' # Homepage for package
+source=(
+  "https://github.com/Elsie19/foo/archive/refs/tags/${pkgver}.zip"
+  "https://github.com/Elsie19/foo/archive/refs/tags/foo.desktop"
+) # A list of downloadable files
+{b2 sha512 sha384 sha256 sha224 sha1 md5}sums=("9cc57f2ca39c2d81aed7e3d82af0b5711863bd3403bb8f024c4c3b4ecf9652a4" 'SKIP') # A list of sums based on a given hash type
+nosubmodules=("foo") # List of sources that should not clone submodules
+noextract=("bar") # List of sources that should not be extracted
+depends=("kdenlive") # Dependencies needed during runtime
+makedepends=("ed>=1.20.1" "gcc") # List of dependencies only needed to build
+checkdepends=("just") # List of dependencies only needed for testing
+optdepends=("bar: not foo"
+  "alacritty: a blazing fast terminal"
+) # A list of optional dependencies and a description
+pacdeps=("dmenu" "tuner") # List of packages from pacstall to be used as dependencies
+breaks=("libbar-git") # Packages that conflict with this package
+conflicts=("libfoo-git" "libfoo-bin" "libfoo-app") # Packages that cannot be installed at the same time as $pkgname
+replaces=("alacritty") # This package can overwrite files from packages in replaces
+gives="libfoo" # Override $pkgname to create a package with name $gives
+pkgdesc="Ultimate program capable of foo and bar
+Here is a long description started on a newline." # Description for package
+backup=('usr/share/pacstall/repo/pacstallrepo') # A list of files without the leading '/' that tell dpkg to consider them configuration files
+priority='essential' # Tells dpkg to set a package priority
+maintainer=("Mr. Person <mr.person@protonmail.com>" "Other person <other@gmail.com>") # List of maintainers of a package
+mask=('fizzle') # Prevent apt packages from being installed with this name
+provides=('foo') # Provides virtual package that satisfies $provides as a dependency
+incompatible=('debian:stretch' 'debian:sid' '*:jammy' '*:20.04') # List of incompatible distros/versions
+compatible=('debian:stretch' 'debian:sid' '*:jammy' '*:20.04') # Inverse of $incompatible
+license=('LGPL-2.1-or-later') # Array of licenses
+external_connection=true # Allow internet access during compilation process
+
+prepare() {
+  cd "${pkgname}-${pkgver}"
+  ./autogen.sh
+  ./configure
+}
+
+build() {
+  cd "${pkgname}-${pkgver}"
+  make -j"${NCPU}" # Use this wherever you'd usually use $(nproc)
+}
+
+check() {
+  cd "${pkgname}-${pkgver}"
+  make checks
+}
+
+package() {
+  cd "${pkgname}-${pkgver}"
+  # It is recommended for paths to be condensed with
+  # variables and to be wrapped by double quotes
+  make install DESTDIR="${pkgdir}"
+
+  # If the package comes already compiled, use 'install'
+  install -Dm755 "${pkgname}" -t "${pkgdir}/usr/bin"
+}
+
+pre_install() {
+  echo "Do pre-unpacking stuff here"
+}
+
+pre_upgrade() {
+  # run if a previous version of this package exists
+  echo "Do pre-unpacking stuff here"
+}
+
+pre_remove() {
+  # remove extra directories before an upgrade or removal
+  rm -rf somedir
+}
+
+post_install() {
+  echo "Do post-unpacking stuff here"
+}
+
+post_upgrade() {
+  # run if a previous version of this package exists
+  echo "Do post-unpacking stuff here"
+}
+
+post_remove() {
+  # remove directories that are not removed during removal
+  rm -rf somedir
+}
+```

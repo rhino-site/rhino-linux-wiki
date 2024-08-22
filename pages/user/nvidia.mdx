@@ -1,0 +1,13 @@
+# Install Nvidia Drivers
+
+Nvidia driver installation on Rhino Linux is fairly straightforward. To install Nvidia drivers, just run the following command:
+```bash
+rhino-pkg install nvidia-dkms
+```
+
+This will list multiple version options to install. If you do not know which one will work best for you, check [Nvidia's website](https://www.nvidia.com/download/index.aspx).
+
+On some older laptops, you may also need Primus libraries.
+```bash
+rhino-pkg install primus-nvidia
+```

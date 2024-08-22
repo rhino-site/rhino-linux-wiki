@@ -1,11 +1,12 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced 📁",
-  "contribution": "How to Contribute",
-  "about": {
-    "title": "About",
-    "type": "page"
+  "user": "User Docs 📚",
+  "dev": "Developer Docs 📁",
+  "home": {
+    "title": "Home",
+    "type": "page",
+    "href": "https://rhinolinux.org",
+    "newWindow": false
   },
   "contact": {
     "title": "Contact ↗",

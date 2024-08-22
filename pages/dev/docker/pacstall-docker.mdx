@@ -1,0 +1,137 @@
+import { Tabs } from 'nextra/components'
+
+## Pacstall Docker Images
+
+For rapid containerized development of Pacstall, we provide Docker images served through the `ghcr.io` registry. These images ship with multiple different versions of Ubuntu and Debian, and are built for both `amd64/x86_64` and `arm64/aarch64` architectures.
+
+### Distribution Bases
+The following distribution bases (`distro-base`) are available:
+
+`ubuntu-latest` - the latest LTS release of Ubuntu.
+
+`ubuntu-rolling` - the latest stable release of Ubuntu (can be LTS or interim).
+
+`ubuntu-devel` - the development branch for Ubuntu. Equivalent to Debian's Sid.
+
+`debian-stable` - the latest stable release of Debian.
+
+`debian-testing` - the next upcoming stable release of Debian.
+
+`debian-unstable` - the development branch for Debian (aka Sid).
+
+### Available Tags
+The images can be reached from the following tags:
+
+`ghcr.io/pacstall/${distro-base}:${version}`
+- Images built and tagged when we release specific milestone versions. Can be any release `4.3.2` or later.
+
+`ghcr.io/pacstall/${distro-base}:master`
+- The latest version of the `master` branch.
+
+`ghcr.io/pacstall/${distro-base}:master-${1a2b3c4d}`
+- A specific commit of the `master` branch, given the first 8 characters of the commit hash.
+
+`ghcr.io/pacstall/${distro-base}:develop`
+- The latest version of the `develop` branch.
+
+`ghcr.io/pacstall/${distro-base}:develop-${1a2b3c4d}`
+- A specific commit of the `develop` branch, given the first 8 characters of the commit hash.
+
+`ghcr.io/pacstall/${distro-base}:latest`
+- The latest built image from either `master` or a tagged version (will never be from `develop`).
+
+### Running Images
+
+For quick setup information, select your platform below:
+
+<Tabs items={['Linux', 'macOS', 'Windows']} defaultIndex="0">
+  <Tabs.Tab>
+    If you have not already done so, install [Docker Engine](https://docs.docker.com/engine/install/)* or [Docker Desktop](https://docs.docker.com/desktop/install/linux-install/).
+    
+    If using only Docker Engine, it is highly recommended to also install the [Docker buildx](https://github.com/docker/buildx)* plugin.
+
+    *Docker Engine and buildx binaries are provided in the [`pacstall-programs`](https://github.com/pacstall/pacstall-programs) repository (for both `amd64` and `arm64` architectures):  
+    ```bash
+    pacstall -I docker-bin docker-buildx-plugin-bin
+    ```
+    ---
+    Run the following command in a terminal to pull the image:
+    ```bash
+    docker pull ghcr.io/pacstall/ubuntu-latest:latest
+    ```
+    Or swap `ubuntu-latest:latest` for another specified base and version.
+
+    Then, you can run the following command to start it:
+    ```bash
+    docker run -it --net=host --privileged ghcr.io/pacstall/ubuntu-latest:latest bash
+    ```
+
+    ---
+
+    You can also use [Pacstall Docker Builder](https://github.com/pacstall/docker/blob/master/README.md) to manage our images.
+
+    To use `pacstall-docker-builder`, first clone and enter the repo:
+
+    ```bash
+    git clone https://github.com/pacstall/docker && cd docker
+    ```
+
+    Now, to pull and start* an image, we can run:
+
+    ```bash
+    ./pacstall-docker-builder -p -t -d ubuntu:latest -v latest
+    ```
+    Or swap `ubuntu:latest` and `latest` for another specified base and version.
+
+    *To pull without starting, drop the `-t` flag.
+  </Tabs.Tab>
+  <Tabs.Tab>
+    If you have not already done so, install [Docker Desktop](https://docs.docker.com/desktop/install/mac-install/).
+
+    ---
+    Run the following command in a terminal to pull the image:
+    ```bash
+    docker pull ghcr.io/pacstall/ubuntu-latest:latest
+    ```
+    Or swap `ubuntu-latest:latest` for another specified base and version.
+
+    Then, you can run the following command to start it:
+    ```bash
+    docker run -it --net=host --privileged ghcr.io/pacstall/ubuntu-latest:latest bash
+    ```
+
+    ---
+
+    You can also use [Pacstall Docker Builder](https://github.com/pacstall/docker/blob/master/README.md) to manage our images.
+
+    To use `pacstall-docker-builder`, first clone and enter the repo:
+
+    ```bash
+    git clone https://github.com/pacstall/docker && cd docker
+    ```
+
+    Now, to pull and start* an image, we can run:
+
+    ```bash
+    ./pacstall-docker-builder -p -t -d ubuntu:latest -v latest
+    ```
+    Or swap `ubuntu:latest` and `latest` for another specified base and version.
+
+    *To pull without starting, drop the `-t` flag.
+  </Tabs.Tab>
+  <Tabs.Tab>
+    If you have not already done so, install [Docker Desktop](https://docs.docker.com/desktop/install/windows-install/).
+
+    ---
+    Run the following command in a terminal to pull the image:
+    ```bash
+    docker pull ghcr.io/pacstall/ubuntu-latest:latest
+    ```
+    Or swap `ubuntu-latest:latest` for another specified base and version.
+
+    Then, you can run the following command to start it:
+    ```bash
+    docker run -it --net=host --privileged ghcr.io/pacstall/ubuntu-latest:latest bash
+    ```
+  </Tabs.Tab>
+</Tabs>

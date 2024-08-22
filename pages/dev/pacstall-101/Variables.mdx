@@ -1,0 +1,397 @@
+import { Callout } from 'nextra/components'
+
+## Variables
+
+### Built-in Variables
+
+| Variable Name   | Purpose                                                            | Value                                                                 | Notes                                                                                     |
+| --------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `pkgdir`        | Staging area for pacscripts                                        | `/usr/src/pacstall/${pkgname}`                                        |                                                                                           |
+| `srcdir`        | Download area for pacscripts and starting area for functions       | `/tmp/pacstall/${pkgname}~${pkgver}`                                  |                                                                                           |
+| `_archive`      | Directory of first source key                                      | `${srcdir}/location`, where `location` is directory of `${source[0]}` extracted | Deprecated for new scripts, unless defined explicitly in the pacscript.        |
+| `homedir`       | The home directory of the running user regardless of who calls it. | `~$USER/`                                                        |                                                                                           |
+| `git_pkgver`    | Commit hash of first source key                                    | e.g. `1a2b3c4d` | Only works if `$pkgname` ends in `-git`        |
+| `CARCH`         | Current architecture running                                       | `$ dpkg --print-architecture`                                         |                                                                                           |
+| `NCPU`          | User overridable core count                                        | `$ nproc` or set by `${PACSTALL_BUILD_CORES}`                         |                                                                                           |
+| `DISTRO`        | Value of the current (parent) distro and codename                           | `$base:$codename`, such as `ubuntu:jammy` or `debian:bookworm`        | Should only be used inside of packaging functions. Use distro enhanced variables instead. If current distro is based on `ubuntu` or `debian`, this will be the version it is based on. |
+| `CDISTRO`        | Value of the current distro and codename                           | `$base:$codename`, such as `ubuntu:jammy` or `linuxmint:elsie`        | Should only be used inside of packaging functions. Use distro enhanced variables instead, based on `DISTRO`. If current distro is `ubuntu` or `debian`, this will usually be the same as `CDISTRO`. |
+| `PACSTALL_USER` | User who invokes pacstall                                          | `$ logname 2> /dev/null \|\| echo "${SUDO_USER:-${USER:-$(whoami)}}`  |                                                                                           |
+
+---
+
+### Package Info
+
+#### `pkgname`
+
+This is what Pacstall records as the name of the built package. Use the following naming schema:
+
+- Keep it lowercase
+- Pacscripts that install from a `deb` file should be called `pkgname-deb`
+- Pacscripts that install from a git repository should be called `pkgname-git`
+- Pacscripts that install an appimage should be called `pkgname-app`
+- Pacscripts that install the binary of the package should be called `pkgname-bin`
+- If a Pacscript does not fall under any of the categories above, use `pkgname`
+
+<Callout emoji="ⓘ">
+  **Important:** The package suffix (`-deb`, `-git`, etc) must match the filename of the pacscript. If `pkgname="foo-deb"`, the file must be named `foo-deb.pacscript`. If there is no suffix, the file should be named `foo.pacscript`.
+</Callout>
+
+
+#### `pkgbase`
+
+If this is not provided in a pacscript, then it is assumed that it is a singular `pkgname`, and a `.SRCINFO` file assumes that `pkgbase` is equal to that singular `pkgname`. If using [package splitting](https://wiki.archlinux.org/title/PKGBUILD#pkgbase), `pkgname` is treated like an array, and multiple packages can be built. To split out the packages, they should define the functions `package_pkgname()`, and can override the following variables inside of them:  `gives`, `pkgdesc`, `arch`, `url`, `license`, `depends`, `checkdepends`, `optdepends`, `pacdeps`, `provides`, `checkconflicts`, `conflicts`, `breaks`, `replaces`, `enhances`, `recommends`, `priority`, `backup`, `repology`.
+
+<Callout type="error" emoji="⛌">
+  **Danger:** In most cases, this should **not** be provided in a pacscript. Only use this for split packages (pacscripts that build multiple packages from the same source).
+</Callout>
+
+#### `repology`
+
+This is what [Pacup](https://github.com/pacstall/pacup) uses to get the latest version of your packaged program for updating the pacscript.
+Read [this](https://github.com/pacstall/pacup/wiki/Wiki) to know how to add it to your repository.
+
+If the `repology` variable isn't present in the pacscript, Pacup will refuse to update it.
+
+#### `arch`
+
+This array is used to define what architectures your pacscripts will work on. If your package works on any architecture, leave it out completely, or if you really want to, put `arch=('any')` or `arch=('all')`.
+
+Two variables, `$CARCH` and `$AARCH` are also available to you, and are linked to the current running architecture. You can get the value that `$CARCH` would be on your system by running `dpkg --print-architecture`, and `$AARCH` by running `echo $HOSTTYPE` (with two exceptions, starred below). These are differentiated in the given list with `CARCH`/`AARCH` (if only one is listed, the variables are equal).
+
+Pacstall supports all architectures that have an [official Debian port](https://www.debian.org/ports/). These are currently:
+
+- `amd64`/`x86_64`
+- `arm64`/`aarch64`
+- `armel`/`arm`
+- `armhf`/`armv7h`*
+- `i386`/`i686`*
+- `mips64el`
+- `ppc64el`
+- `riscv64`
+- `s390x`
+
+<Callout emoji="ⓘ">
+  **Important:** While both `$CARCH` and `$AARCH` will always be accessible to a pacscript, only one naming scheme may be used in the `arch` array. This means you cannot mix and match, like `arch=('amd64' 'i686')` or `arch=('arm64' 'aarch64')`. The naming scheme used will determine which enhanced arrays will be available. See [source](#source) for more on enhanced arrays.
+</Callout>
+
+#### `pkgver`
+
+This is the version number. It should ideally (but not required) be using [semver](https://semver.org). As long as the version number can be handled by `dpkg --validate-version`, it is valid.
+
+#### `pkgrel`
+
+This is used when you wish to trigger an update on users computers but [pkgver](#pkgver) has not been updated. This could be used if you fix a dependency in a pacscript, or perhaps you forgot to add a line to the building process. It is implicitly set to `1` if not included, and should not be included by default. Every time [pkgver](#pkgver) is updated, `pkgrel` should be removed.
+
+#### `epoch`
+
+This variable is used to forcibly upgrade a package in any circumstance. In most cases, a `pkgrel` bump will work just fine, but certain circumstances may require an upgrade that breaks [normal comparison logic](https://wiki.archlinux.org/title/PKGBUILD#epoch). It is assumed to be 0 [by default](https://www.debian.org/doc/debian-policy/ch-controlfields.html#version), and if used, should be a small integer.
+
+<Callout type="error" emoji="⛌">
+  **Danger:** Use this _sparingly_, as any package using `epoch` cannot remove the `epoch` on the next `pkgver` update.
+</Callout>
+
+#### `url`
+
+This variable is used to show the homepage/website of the package (if any).
+
+#### `incompatible`
+
+This array is a list of distros/versions that cannot be used to build this package, for example due to outdated dependencies. Elements follow a schema of `$distro:$version`, where either `$distro` or `$version` can be a glob character ('\*'), but not both. `$version` can be a distro name (`jammy`, `noble`, `sid`, etc) or a version number (`22.04`, `16.04`, etc).
+
+#### `compatible`
+
+This is the opposite of [incompatible](#incompatible). `compatible` will only build on distros/versions found inside.
+
+#### `pkgdesc`
+
+This is a variable that sets the description of the package. Try to keep it as close as possible to upstream. This variable can be multi-lined for extended descriptions. Do not end the short description (first line) with a period. For example:
+
+```bash
+pkgdesc="Provide limited super user privileges to specific users
+Sudo is a program designed to allow a sysadmin to give limited root
+privileges to users and log root activity. The basic philosophy is to give
+as few privileges as possible but still allow people to get their work done."
+```
+
+#### `license`
+
+An array of licenses that this package is licensed under. Valid licenses are listed in [https://spdx.org/licenses/](https://spdx.org/licenses/). Custom licenses can be included with the prefix `custom:`.
+
+#### `maintainer`
+
+An array of keys that contain the name and contact email of the package maintainer(s). The primary maintainer of the package should be listed first, and others after them. Subsequent maintainers will be marked as "Uploaders" in the final package. The keys take the form like this:
+
+```bash
+"my name <email here>"
+```
+
+#### `custom_fields`
+
+This is an optional list of Debian control fields not already used by Pacstall's variables. If you want to provide a custom field to the `control` file of a built package, you may do so with the following format options:
+
+```bash
+custom_fields=(
+  "Banana: this is a valid field"
+  "My-Field: this is also a valid field"
+  "Third-One: even this
+  is a valid field"
+)
+```
+
+There are a few restrictions on field names:
+- The following cannot be used: `Depends`, `Package`, `Version`, `Architecture`, `Section`, `Priority`, `Essential`, `Vcs-Git`, `Build-Depends`, `Build-Depends-Arch`, `Build-Conflicts`, `Build-Conflicts-Arch`, `Provides`, `Conflicts`, `Breaks`, `Enhances`, `Recommends`, `Suggests`, `Replaces`, `Homepage`, `License`, `Maintainer`, `Uploaders`, `Description`, `Installed-Size`
+- Numbers and spaces are not allowed
+- The first letter must be capital, and all others must be lowercase
+- Hyphens should be used for multiword fields, and follow the same capitalization rule for each word
+- Hyphens cannot be the first or last character in the field name
+
+---
+
+### Package Sources
+
+#### `source`
+
+This is an array with URLs as elements. These will be downloaded by pacstall before the [prepare](Functions#prepare) function. `source` can be created many different ways, and is incredibly powerful in functionality.
+
+Inside a `source` array, you have the following schema:
+
+- Elements can be optionally prefixed with `dest::` which will instruct pacstall to download (or copy) that archive to the name `dest`.
+    - Note that `dest` is **not** where the final *extracted* output of a download would be, but where the download is *going to*.
+- Git sources must have their URL prefixed with `git+` if the URL does not end with `.git`.
+- Git sources may end in `#branch=`, `#tag=`, or `#commit=`, followed by their respective contents.
+    - If this is not provided, then it is assumed to clone from `HEAD` of the repository. This is often the `master` or `main` branch.
+- To use sources relative in location to the pacscript, there are two main options:
+    - Use `file://` for installing local archives relative to the pacscript. Generally will look like `file://${PWD}/example.zip` or `file:///home/pacstall/example.zip`.
+    - For installing files relative to the pacscript from the `pacstall-programs` repository, list the file plainly, like `"example.desktop"`. The file should be stored in the same folder as the pacscript, in `packages/${pkgname}/`. This is useful for avoiding large echos in pacscripts, but should only be used for standard text files, or potentially small images for icons. Larger archives should be stored externally.
+- Deb sources can only be provided one entry. More complex array options are described below.
+
+An example with every option added (not functional) would look like:
+
+```bash
+custom-location.zip::git+file://example.com/archive.tar.xz?h=file#branch=master
+```
+
+Extraction method is calculated from the initial url basename and not `dest`, so an example like above would still extract with the correct method. The following extensions can be extracted by default:
+- `*.zip`
+- `*.tar.gz`/`*.tgz`
+- `*.tar.bz2`/`*.tbz2`
+- `*.tar.bz`/`*.tbz`
+- `*.tar.xz`/`*.txz`
+- `*.tar.zst`/`*.tzst`
+- `*.gz`
+- `*.bz2`
+- `*.xz`
+- `*.lz`
+- `*.lzma`
+- `*.zst`
+- `*.7z`
+- `*.rar`
+- `*.lz4`
+- `*.tar`
+
+If using an archive that contains a `*.tar.*` extension that is not covered by any of the above listed, pacstall will attempt to extract it with the regular `*.tar` method. If pacstall does not recognize the extension, it will not try to extract it. If you do not want to extract a certain source, see [noextract](#noextract).
+
+You may define architecture specific sources like `source_$arch`, and you can define distro sources like `source_$DISTRO`, where `$DISTRO` can be either `ubuntu` or `debian`, or a codename of a release, such as `jammy` or `bookworm`. If you want to combine both a distro and architecture, you may do `source_${DISTRO}_${arch}`. A CI maintained file in [pacstall/pacstall-programs](https://github.com/pacstall/pacstall-programs/blob/master/distrolist) will provide an up-to-date list of the supported releases.
+
+Enhanced arrays can also be used in conjunction with the existing normal arrays, as a way to append. They append in order of increasing specificity:
+
+| order          | array                        |
+|----------------|------------------------------|
+| Least specific | `source`                     |
+|                | `source_$arch`               |
+|                | `source_$distrobase`         |
+|                | `source_$distrorel`          |
+|                | `source_${distrobase}_$arch` |
+| Most specific  | `source_${distrorel}_$arch`  |
+<Callout emoji="ⓘ">
+  **Important:** `-deb` packages can only use one source entry. Use the enhanced arrays to provide for multiple targets. For `-deb` packages, enhanced `source` and `*sums` arrays will override instead of append. This is not the case for the other enhanced arrays.
+</Callout>
+
+#### `*sums`
+
+These sets of arrays are used in relation to [source](#source) and are used to verify the integrity of the downloaded package. The following hashing programs can be used for the name of the sums array:
+
+1. `sha256sums`
+2. `sha512sums`
+3. `sha384sums`
+4. `sha224sums`
+5. `sha1sums`
+6. `md5sums`
+7. `b2sums`
+
+Along with these sums arrays, the same `$arch` and `$DISTRO` rules from [source](#source) apply.
+
+If you do not wish to check the hash of a certain file, you may put `SKIP` as the element corresponding to the location of the file in `source`.
+
+#### `nosubmodules`
+
+Use this array to prevent pacstall from cloning submodules for any source array with `dest` where `dest` is included in this array. For example:
+
+```bash
+source=(
+  "rpk::https://github.com/rhino-linux/rhino-pkg.git"
+  "https://github.com/tamton-aquib/stuff.nvim.git"
+)
+nosubmodules=("rpk")
+```
+
+#### `noextract`
+
+Use this array like you would with [nosubmodules](#nosubmodules) except this is for when you do not want a source to be extracted.
+
+#### `backup`
+
+In dpkg, files in `/etc` are set as "configuration files", meaning that by default they will not be removed when one runs `apt remove pkg`, but will with `apt purge pkg`. This array should be filled with file paths (without the leading slash), and every file in it will be set as a configuration file. Do not include any files that will be unpacked in `/etc`, as that is already handled by dpkg. There is one special exception you may add to a key, and that is a leading `r:`, which instructs dpkg to **delete** that file on the next upgrade. If you include `r:` in a key, that file _cannot_ appear in the binary package.
+
+#### `external_connection`
+
+Because Pacstall runs builds in an isolated environment, internet connection is by default not permitted inside of the [packaging functions](Functions#packaging-scripts). If a package needs to connect to the internet for these functions (often for `cargo` builds, certain `python` builds, and occasionally making a git connection), the variable `external_connection=true` must be provided. By default, this is not included, and is assumed `false`.
+
+---
+
+### Package Dependencies
+
+#### `depends`
+
+This is an array used to declare runtime dependencies of a package. As with [source](#source), this array can be enhanced by `$arch` and/or `$DISTRO`. Along with that, you can _also_ add version constraints, which take the following schema:
+
+1. Any dependency can optionally have the following format:
+   1. `pkg>=version`
+   2. `pkg<=version`
+   3. `pkg>version`
+   4. `pkg<version`
+   5. `pkg=version`
+2. Dependencies can be alternative, so that if the first package cannot be found or it's dependency constraints cannot be satisfied, will attempt to find the alternative package: `pkg | pkg2`. These constraints apply to all dependency arrays, with the exception of [pacdeps](#pacdeps).
+
+#### `makedepends`
+
+This is an array used to declare build-time dependencies. Everything from [depends](#depends) apply here.
+
+#### `checkdepends`
+
+This is an array used to declare dependencies needed for testing in the [check](#check) function. These are installed at the same time as `makedepends`. Everything from [depends](#depends) apply here.
+
+#### `optdepends`
+
+This is an array used to declare optional dependencies. Everything from [depends](#depends) apply here, with one addition, that being the requirement of a description, which takes the form of `pkg: description here`. Remember that `pkg` in this case can be any version constraint, including an alternative, so this is valid:
+
+```bash
+"libidk:i386<5.2.3 | libidk:i386>1.2.5: provides libidk support"
+```
+
+If at build time the user decides not to install a package in `optdepends`, it will be logged as [Suggests](https://www.debian.org/doc/debian-policy/ch-relationships.html#binary-dependencies-depends-recommends-suggests-enhances-pre-depends).
+
+#### `pacdeps`
+
+This is an array that is used to declare dependencies on other pacstall packages. Functionally, they will be installed like [makedepends](#makedepends) (before building) and will be logged like [depends](#depends) (required). Unlike the other `*depends` arrays, these **cannot** use version constraints, but may still be enhanced by `$arch` and/or `$DISTRO`.
+
+---
+
+### Package Relations
+
+#### `breaks`
+
+This is an array that declares packages that cannot be installed alongside this package. Any package declared in `breaks` can be unpacked alongside this package, but both cannot exist. Essentially, this is what you should use to declare incompatibilities between packages that do _not_ have file path conflicts. 
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `conflicts`
+
+This is an array similar to [breaks](#breaks), except it declares that packages _cannot_ be unpacked at the same time, likely due to having files in the same locations.
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `makeconflicts`
+
+This is an array used to declare packages that cannot be installed on the system at build-time, usually because of a package conflict with a build-time dependency.
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `checkconflicts`
+
+This is an array used to declare packages that cannot be installed on the system for testing in the [check](#check) function, usually because of a package conflict with a check dependency.
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `replaces`
+This is an array that declares packages that has files [that can be overwritten by this package](https://www.debian.org/doc/debian-policy/ch-relationships#overwriting-files-in-other-packages). This functionality is available only in conjunction with [breaks](#breaks).
+
+If you want to [replace whole packages](https://www.debian.org/doc/debian-policy/ch-relationships#replacing-whole-packages-forcing-their-removal), instead of simply taking over files, you should have `replaces` alongside [conflicts](#conflicts).
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `provides`
+
+A list of packages that this package can satisfy as a dependency. For instance, the package `foobar-plus` could satisfy `foobar`, so you would have this:
+
+```bash
+provides=("foobar")
+```
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `recommends`
+
+A list of packages that this package does not depend on, but may receive improved functionality from, and most users would want to have included with their install. Packages marked "Recommends" have stronger weight than packages marked "Suggests", but can still be opted out of, unlike [depends](#depends).
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `suggests`
+
+A list of packages that this package does not depend on, but may receive improved functionality from. This is most useful for when building static packages, to use instead of [optdepends](#optdepends), as optdepends that are installed on the system are marked as [depends](#depends).
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `enhances`
+
+A list of packages that this package can satisfy as a suggested package or recommended package. For instance, if the package `foobar` recommends `foobar-extras`, in `foobar-extras` you would have:
+
+```bash
+enhances=("foobar")
+```
+
+This array can be enhanced by `$arch` and/or `$DISTRO`.
+
+#### `gives`
+
+This variable is used generally in conjunction with [pkgname](#pkgname), in which `gives` will override the name that the package will take. General examples look like:
+
+```bash
+pkgname="foo-git"
+gives="foo"
+```
+
+In order to distinguish the pacstall name and the installed package name.
+
+This variable can be enhanced by `$arch` and/or `$DISTRO`. *However*, unlike the arrays, entries do not append, but instead override. They override in order of increasing specificity:
+
+| order          | variable                    |
+|----------------|-----------------------------|
+| Least specific | `gives`                     |
+|                | `gives_$arch`               |
+|                | `gives_$distrobase`         |
+|                | `gives_$distrorel`          |
+|                | `gives_${distrobase}_$arch` |
+| Most specific  | `gives_${distrorel}_$arch`  |
+
+#### `priority`
+
+Sets the [priority](https://www.debian.org/doc/debian-policy/ch-archive.html#s-priorities) of a package. It can have the following values if included:
+
+1. `essential`
+2. `required`
+3. `important`
+4. `standard`
+5. `optional` (default)
+
+<Callout type="error" emoji="⛌">
+  **Danger:** Do not include `priority` unless you know what you're attempting to do.
+</Callout>
+
+#### `mask`
+
+An array containing `apt` or `pacstall` package names. Once this package is installed, anything inside `mask` will be prevented from showing up in `apt` and `pacstall` search results, or anything relating to `dpkg`. Once the package is removed, the effect reverses and `mask` contents will be visible again.
+
+<Callout type="error" emoji="⛌">
+  **Danger:** Do not use `mask` unless you know what you're doing.
+</Callout>

@@ -1,0 +1,25 @@
+import { Callout } from 'nextra/components'
+
+## ISO/Live Image
+
+### GRUB Bootloader
+When you boot from your Live USB you will be greeted with the GRUB Bootloader, which is the most commonly used bootloader for Linux systems. You will want to select "Try or Install Rhino Linux" - Which should be selected by default, and press enter.
+
+• Rhino Linux currently utilises unsigned kernels, this means that you may need to disable secureboot in your UEFI/BIOS beforehand.
+
+### Booting to the Rhino Linux Desktop
+
+When you first boot into your live system, the installer will not automatically start, rather you are immediately given the chance to try Rhino Linux on your live USB. When you are ready to install Rhino Linux you can click on the icon on your desktop*, which will then launch our customised Calamares Installer.
+
+
+<Callout emoji="ⓘ">
+  **Important:** The "Install Rhino Linux" icon does not currently show up on the desktop due to a bug in recent XFCE updates ([issue report](https://github.com/rhino-linux/os/issues/85)).
+
+Users can start the installer and select this icon from the application grid, which can be launched from the dock, or with the shortcut `Super + A`.
+</Callout>
+
+### Installer
+
+When you first boot into the installer, you will be asked to select your language layout. Afterwards you will need to select your location so that the system can accurately grab your timezone. You will then need to select your keyboard layout, you are also able to test your keyboard layout to ensure it is correct.
+
+You will then need to select how you will partition your disks, your usual options are to install alongside an existing operating system, erase the entire contents of the disk and install Rhino Linux or manually partition your disks. Finally you will need to provide a name, username, a name for your computer and then your password. Afterwards you will be given a summary of the changes you are about to make, and then you can confirm this and begin your install.

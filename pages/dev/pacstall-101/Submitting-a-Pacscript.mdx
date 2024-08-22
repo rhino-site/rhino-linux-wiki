@@ -1,0 +1,60 @@
+## Submitting a Pacscript
+### Automatic
+
+Since you should have `pre-commit` already installed, you can simply commit your changes. This will trigger a couple things, such as updating our packagelist, and creating/updating the proper SRCINFO file. You may have to re-add the repository contents and re-commit after `pre-commit` rejects your commit and modifies the branch, which usually looks something like:
+```bash
+$ git add .
+$ git commit -m "bla" # Fails here
+$ git add .
+$ git commit -m "bla" # Succeeds
+```
+We are actively trying to find a way to make this more seamless and if you have any suggestions, you should tell us!
+
+### Manual
+### Updating the packagelist
+
+### SRCINFO
+You must generate the `.SRCINFO` file for your package. This is done with `pre-commit` after the first time it is added, but you must do it manually initially. You can do so by using [this script](https://github.com/pacstall/pacstall-programs/blob/master/scripts/srcinfo.sh) in the [pacstall-programs](https://github.com/pacstall/pacstall-programs) repository. Assuming you are at the head of the repo, and a pacscript has been created at `packages/${pkgname}/${pkgname}.pacscript`:
+```bash
+./scripts/srcinfo.sh add ${pkgname}
+```
+This will also update the `packagelist` at the head of the repository. It will add your package name in alphabetic order into the file. This should be automatically done with `pre-commit` when you create your commit, but if that fails in any way, you can use a useful command to automate it like:
+```bash
+./scripts/srcinfo.sh build packagelist
+```
+
+### Opening a PR
+
+Before you do anything, please make sure you have all the [proper tooling](https://github.com/pacstall/pacstall-programs#how-to-setup-the-environment-for-pacscript-development), and you have read our [contributing guidelines](https://github.com/pacstall/pacstall-programs/blob/master/CONTRIBUTING.md).
+
+#### How to create a valid PR
+When you complete your script, fork this repo and add your script to `packages/$name/$name.pacscript`.
+
+Open a PR here and make the title:
+```
+add: `pkgname`
+```
+
+We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) to bring uniformity to our commit messages, so please use this as well. Please do one PR per package to make sure the auto checker can test if the pacscript works. Use this template for your PR's body:
+```markdown
+## Progress 
+
+- [x] Edit packagelist
+- [x] Add initial pacscript
+- [ ] Contact devs
+- [ ] Add maintainer to pacscript
+```
+Then, if a reviewer tells you to contact the developer of the pacscript you have made, make an issue on whatever platform the developer uses, such as GitHub, or GitLab, etc. Use this template when making the issue:
+```markdown
+[Pacstall](https://github.com/pacstall/pacstall) is a community-driven AUR-like package manager for Ubuntu. We have an ongoing pull request to add [$name](https://github.com/pacstall/pacstall-programs/pull/$prnumber) to our repository.
+
+We have a few questions for you:
+* Would you like to maintain the pacscript (similar to a PKGBUILD) yourself? We can maintain it for you if you decide not to.
+* Could you include a section in your documentation showing Pacstall as a valid method of installation for $name for Debian/Ubuntu users? We could make a pull request for that if you want.
+```
+
+#### Common PR etiquette
+
+Please **do not** click the *Update branch* button every time your branch is out of date. This will give the impression that something in the PR was modified of tangible value, will waste the CIs time, and clutter the squash commit.
+
+Please test your package locally on as many systems as you reasonably can before creating a PR. We are **not** your package testers, nor should you expect us to be. We may help you along the way, but do not ask us to test. We will do our own testing but you as the maintainer should be ahead of us before you submit your package.

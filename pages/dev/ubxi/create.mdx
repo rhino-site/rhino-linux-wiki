@@ -1,0 +1,29 @@
+# Creating and Developing for UBXI
+
+Is there a UBXI port you wish to create? This is the guide for you. A few simple concise rules about how we operate when it comes to developing for UBXI.
+
+Your first point of contact should be AJStrong, the Desktop Lead for Rhino Linux. They will ensure that your UBXI port is up to standard and assist with the design process for the ports. You can contact them on:  
+• Discord: @ajstrong  
+• Email: ajstrong.dev@gmail.com
+
+### Colouring
+
+All UBXI ports must attempt to follow [the Unicorn and Rhino Linux brand colour scheme](../brand) as closely as possible. This sometimes might mean that you will have to create your own custom themes for use within UBXI.
+
+### Components
+
+Since UBXI does not use the default Unicorn environment, we will not be using `rhino-core` anymore, but instead `rhino-ubxi-core`, which includes our basic distribution branding and maintenance, as well as our in-house apps and utilities.
+
+Not all components that we ship in Unicorn will be required for a UBXI port. We encourage users to seek out alternatives to our graphical tools (`plank, lightpad, ulauncher`) if they are readily available for different given environments.
+
+An example of this would be if a UBXI GNOME port was created, rather than utilizing `plank` to create a consistent floating dock, the "Dash to Dock" extension with some modifications could be utilized instead.
+
+### Icons
+
+All UBXI ports must utilize the exact same icon theme. Rhino Linux currently utilizes custom icons for their own applications and components, and the `Papirus` icon theme (with `papirus-folders/violet`) for all other icons.
+
+• Work is currently underway for the creation of a custom Rhino Linux icon pack. This will unify the look and feel of all of the icons. Once the "Unicon" icon theme has been created, all UBXI ports must switch to utilizing that instead.
+
+### Packaging
+
+Once you feel your UBXI port is ready to go, you need to package it and submit it for review. To do that, please read our [packaging guide](package).

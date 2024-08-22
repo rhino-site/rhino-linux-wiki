@@ -1,10 +1,10 @@
-# Nextra Docs Template 
+# Rhino Linux Wiki
 
-This is a template for creating documentation with [Nextra](https://nextra.site).
+This is the official Rhino Linux Wiki, built with [Nextra](https://nextra.site).
 
-[**Live Demo →**](https://nextra-docs-template.vercel.app)
+[**Live Demo →**](https://rhino-linux-wiki.vercel.app)
 
-[![](.github/screenshot.png)](https://nextra-docs-template.vercel.app)
+[![](https://github.com/user-attachments/assets/ae8f5395-34df-4352-84f0-0dea02dfd0ad)](https://rhino-linux-wiki.vercel.app)
 
 ## Quick Start
 
