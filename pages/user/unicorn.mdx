@@ -6,6 +6,16 @@ import { Callout } from 'nextra/components'
   **This page is under construction.** Feel free to contribute!
 </Callout>
 
+<Callout emoji="ⓘ">
+  **Important:** The global menu plugin in Unicorn's panel has been experiencing sizing issues due to recent XFCE4 updates. We have temporarily mitigated these issues with the CSS block:
+```css
+.-vala-panel-appmenu-core > * { min-width: 1430px; }
+```
+in `~/.config/gtk-3.0/gtk.css`, but this is not a one-size-fixes-all situation.
+
+If the panel appears to be bleeding off of the edge for you even after completing full installation, edit the file mentioned and change `1430px` until it fits your screen properly. You will have to log out and back in for the change to take effect.
+</Callout>
+
 ## Keybinds
 
 Unicorn utilizes intuitive keyboard shortcuts, so power-users never even need to touch their mouse. The app grid, Lightpad, can also be navigated with the arrow keys. Our keyboard shortcuts were designed with movement in mind, too. You do not need to move or use two hands to use them, as all of the keybinds are accessible with one hand. Each keybind also correlates to the first letter of its intended function.
