@@ -1,0 +1,71 @@
+import { Callout } from 'nextra/components'
+
+# Tips for Wiki Pages
+
+## Notice Boxes
+
+Notice boxes are an easy way to highlight important information in GitHub Flavored Markdown, using syntax like:
+```md
+> [!NOTE]  
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!IMPORTANT]  
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]  
+> Critical content demanding immediate user attention due to potential risks.
+
+> [!CAUTION]
+> Negative potential consequences of an action.
+```
+
+While Nextra does not support notice boxes directly, they provide an analogous feature called Callouts. We have a standard format for how callout boxes should be written.
+
+First, it is necessary to import the component at the top of any page that uses Callouts:
+```mdx
+import { Callout } from 'nextra/components'
+```
+
+Now, you can use the following templates:
+#### Note Box
+<Callout type="info" emoji="✎">
+  **Note:** Highlights information that users should take into account, even when skimming.
+</Callout>
+```mdx
+<Callout type="info" emoji="✎">
+  **Note:** Highlights information that users should take into account, even when skimming.
+</Callout>
+```
+
+#### Important Box
+<Callout emoji="ⓘ">
+  **Important:** Crucial information necessary for users to succeed.
+</Callout>
+```mdx
+<Callout emoji="ⓘ">
+  **Important:** Crucial information necessary for users to succeed.
+</Callout>
+```
+
+#### Warning Box
+<Callout type="warning" emoji="⚠">
+  **Warning:** Critical content demanding immediate user attention due to potential risks.
+</Callout>
+```mdx
+<Callout type="warning" emoji="⚠">
+  **Warning:** Critical content demanding immediate user attention due to potential risks.
+</Callout>
+```
+
+#### Danger Box
+<Callout type="error" emoji="⛌">
+  **Danger:** Negative potential consequences of an action.
+</Callout>
+```mdx
+<Callout type="error" emoji="⛌">
+  **Danger:** Negative potential consequences of an action.
+</Callout>
+```
