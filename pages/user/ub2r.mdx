@@ -1,0 +1,17 @@
+import { Callout } from 'nextra/components'
+
+# Converting Ubuntu to Rhino Linux
+
+<Callout emoji="ⓘ">
+  **Important:** This only works on normal Ubuntu and flavors (Kubuntu, Cinnamon, Unity, etc). Ubuntu-based distributions like Linux Mint, Pop!_OS, and elementary OS are not supported.
+</Callout>
+
+<Callout type="error" emoji="⛌">
+  **Danger:** PPAs, desktop extensions, and other applications may break when upgrading to Ubuntu's `devel` branch. As is the nature of being rolling release, the state of this upgrade is unstable, and could have temporary blockages due to conflicting package and dependency updates. Use this script responsibly. It is strongly advised against using this in a production setting.
+</Callout>
+
+
+Do you currently run Ubuntu on your machine, but don't want to reinstall your entire system? We [provide a script](https://github.com/rhino-linux/os/blob/main/ub2r.sh) to help easily upgrade your existing Ubuntu installation to a Rhino Linux one. Simply run the following command in a terminal, and respond to the prompts that the script provides:
+```bash
+bash -c "$(curl -fsSL https://rhinolinux.org/ub2r)"
+```
