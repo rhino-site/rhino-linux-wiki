@@ -1,21 +1,28 @@
 import React from 'react'
-import { DocsThemeConfig } from 'nextra-theme-docs'
+import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import { useRouter } from 'next/router'
 
 const config: DocsThemeConfig = {
   useNextSeoProps() {
     return {
-      titleTemplate: '%s | Rhino Linux Wiki'
+      titleTemplate: '%s'
     }
   },
-  head: (
-    <>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="Rhino Linux" />
-      <meta property="og:description" content="Ubuntu Based, Rolling Release" />
-      <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
-      <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico" />
-    </>
-  ),
+  head: () => {
+    const { asPath, defaultLocale, locale } = useRouter()
+    const { frontMatter } = useConfig()
+    return (
+      <>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{`${frontMatter.title} | Rhino Linux Wiki` || "Rhino Linux Wiki"}</title>
+        <meta property="og:site_name" content="Rhino Linux Wiki" />
+        <meta property="og:description" content={frontMatter.description || "Ubuntu Based, Rolling Release"} />
+        <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
+        <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico" />
+        <meta name="theme-color" content="#8d7be4" />
+      </>
+    )
+  },
   logo: (
     <>
       <svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" width="24" height="24" viewBox="0 0 333.94 264.05">
